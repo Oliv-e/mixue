@@ -9,8 +9,7 @@ def intInput(message, validate=None, min_amount=None):
         if validate is not None and v not in validate:
             print("Pilihan harus", ", ".join(validate))
             return intInput(message, validate)
-        if v != '':
-            v = int(v)
+        v = int(v)
         if min_amount is not None and v < min_amount:
             print("Input harus lebih dari atau sama dengan",
                   priceFormat(min_amount))
