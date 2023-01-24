@@ -1,7 +1,7 @@
 import model.database as database
 from helper import *
 from datetime import datetime
-
+import os
 
 def start():
     selected_menu = None
@@ -73,12 +73,13 @@ def printInvoice(orderData):
     if uang < totalPrice:
         print("Kurang")
     else:
+        os.system('cls')
         today = datetime.now()
-        tanggal = today.strftime('%d-%m-%Y, %H:%M:%S')
+        tanggal = today.strftime('%Y-%m-%d %H.%M.%S')
 
         print('=' * 75)
         print(f'{"MIXUE":^75}')
-        print(f'{"Tebet":^75}')
+        print(f'{"PontianakTo go":^75}')
         print(tanggal)
         print('=' * 75)
 
@@ -98,6 +99,8 @@ def printInvoice(orderData):
         print(f'{"Cash":<60}', ':', priceFormat(uang))
         print(f'{"Change":<60}', ':', priceFormat(kembalian))
         print(f'\n{"Address : "}',
-              "Jl. Dr. Saharjo No. 266, Tebet, Jakarta Selatan")
-        print(f'{"Cashier : "}', "Oliver Dilon")
+              "Jl. Jendral Ahmad Yani No. 4, Kec. Pontianak Selatan, Pontianak")
+        print(f'\n{"Tel : "}',
+              "+62 851 6121 4171")
+        print(f'{"Cashier : "}', "Oliver Dillon")
         print('=' * 75)
