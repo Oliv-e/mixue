@@ -1,13 +1,14 @@
 import model.database as database
 from helper import *
 from datetime import datetime
-import os
+# import os
+
 
 def start():
     selected_menu = None
+    not_found = False
     orderData = []
     while True:
-        # print("order", orderData)
         # select tipe menu
         clearScreen()
         if selected_menu is None:
@@ -22,6 +23,9 @@ def start():
 
             selected_menu = intInput("Pilih jenis menu : ")
 
+        if (not_found):
+            print("Produk tidak ditemukan!")
+
         # print products
         db = menu_type[str(selected_menu)]
         products = database.createList(db)
@@ -32,15 +36,16 @@ def start():
             val = f'{v[0]:8} {v[1]}'
             print(f'{val:40}', priceFormat(int(v[2])))
 
-        code = input("Pilih kode produk : ")
+        code = input("Pilih code produk : ")
         clearScreen()
 
         product = database.search(db, 'code', code)
         if product:
+            not_found = False
             amount = intInput("Masukkan jumlah pesanan : ")
             product['amount'] = amount
             orderData.append(product)
-            # kasi pilihan simpan transaksi, sm tambah menu lain
+
             print('1. Tambah menu lain')
             print('2. Cetak invoice')
             act = intInput("Pilih aksi : ", ['1', '2'])
@@ -51,9 +56,8 @@ def start():
                 input("\nTekan enter untuk melanjutkan.")
                 clearScreen()
                 break
-
         else:
-            print("Produk tidak ditemukan!")
+            not_found = True
 
 
 def printInvoice(orderData):
@@ -63,9 +67,6 @@ def printInvoice(orderData):
         order = orderData[i]
         price = order['price']
         amount = order['amount']
-
-        # val = f'{order["code"]:8} {order["name"]:30} {priceFormat(int(price)):10} * {amount} {priceFormat(price * amount):10}'
-        # print(f'{val}')
         totalPrice += (price * amount)
 
     print("Total :", priceFormat(totalPrice))
@@ -73,18 +74,19 @@ def printInvoice(orderData):
     if uang < totalPrice:
         print("Kurang")
     else:
-        os.system('cls')
+        clearScreen()
         today = datetime.now()
-        tanggal = today.strftime('%Y-%m-%d %H.%M.%S')
+        tanggal = today.strftime('%Y-%m-%d %H:%M:%S')
 
         print('=' * 75)
         print(f'{"MIXUE":^75}')
         print(f'{"PontianakTo go":^75}')
+        print(generateRandom(15))
         print(tanggal)
         print('=' * 75)
 
         print(
-            f'{"Kode":8} {"Item":30} {"Price":10} {"QTY":^8} {"AMT":^15}')
+            f'{"Code":8} {"Item":30} {"Price":10} {"QTY":^8} {"AMT":^15}')
         print('-' * 75)
         kembalian = uang - totalPrice
         for i in range(len(orderData)):

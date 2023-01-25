@@ -1,9 +1,8 @@
 # import model.database as database
 import model.transaction as transaction
 from helper import *
-import os
 
-os.system('cls')
+clearScreen()
 print("Selamat datang di Kasir Mixue")
 # todo : fitur login (untuk nama kasir)
 action = ['buat transaksi']
