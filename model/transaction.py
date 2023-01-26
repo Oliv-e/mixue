@@ -21,7 +21,7 @@ def start():
             for i in menu_type:
                 print(f'{i}. {snakeToTitle(menu_type[i])}')
 
-            selected_menu = intInput("Pilih jenis menu : ")
+            selected_menu = intInput("Pilih jenis menu : ", ['1', '2', '3', '4'])
 
         if (not_found):
             print("Produk tidak ditemukan!")
